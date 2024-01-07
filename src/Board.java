@@ -108,8 +108,15 @@ public class Board {
             if (totalSteps >= road.length - playRock.getPosition()) {
                 removePieceFromPlayerKitchen(playRock.getPosition(),playRock);
                 int steps = totalSteps + playRock.getPosition() - (road.length-1);
-                playRock.setPosition(-1);
-                movePlayRockInPath(playRock,steps, path);
+
+                if (playRock.getPlayer().id == 1) {
+                    playRock.setPosition(-1);
+                    movePlayRockInPath(playRock, steps, path);
+                }
+                else {
+                    playRock.setPosition(((path.length)/2)-1);
+                    movePlayRockInPath(playRock,steps,path);
+                }
                 playRock.isInTheKitchen = false;
             }
         else {
@@ -122,7 +129,18 @@ public class Board {
     }
     public void movePlayRockInPath(PlayRock playRock, int totalSteps, PlayRock[] road)
     {
+        if (playRock.getPosition()+totalSteps > road.length-1)
+        {
 
+            int restOfSteps = playRock.getPosition()+totalSteps - (road.length-1);
+            System.out.println("rest : " + ( playRock.getPosition()+totalSteps - (road.length)));
+            removePieceFromPath(playRock.getPosition());
+            setPieceInPath(restOfSteps,playRock);
+            playRock.setPosition(restOfSteps);
+            playRock.counter += totalSteps;
+        }
+        else {
+        System.out.println("counter : " +playRock.counter);
         if(playRock.counter >= path.length - 1)
         {
             playRock.tastee7=true;
@@ -141,6 +159,7 @@ public class Board {
                 removePieceFromPath(playRock.getPosition());
             }
             playRock.setPosition(playRock.getPosition()+totalSteps);
+        }
         }
     }
     public boolean isMatbokh(PlayRock playRock,int totalSteps)
