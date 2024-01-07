@@ -18,15 +18,21 @@ public class Game {
     public void run() {
         while (true) {
             Player currentPlayer = turn ? player1 : player2;
-            System.out.println("Press 1 to roll the dice or 0 to exit : player : " + currentPlayer.getName());
+            Player otherPlayer = turn ? player2 : player1;
+            if (currentPlayer.hasWon()) {
+                scanner.close();
+                System.out.println("sahozy : "+currentPlayer.getName() + " has won the game!");
+                break;
+            }
+            System.out.println("sahozy : Press 1 to roll the dice or 0 to exit : player : " + currentPlayer.getName());
             int input = scanner.nextInt();
 
             if (input == 0) {
                 break;
             } else if (input == 1) {
-                handleDiceRollAndMove(currentPlayer);
+                handleDiceRollAndMove(currentPlayer,otherPlayer);
             } else {
-                System.out.println("Invalid input!");
+                System.out.println("sahozy : Invalid input!");
             }
 
             turn = !turn;
@@ -36,7 +42,7 @@ public class Game {
         System.out.println("Game over. Thank you for playing!");
     }
 
-    private void handleDiceRollAndMove(Player currentPlayer) {
+    private void handleDiceRollAndMove(Player currentPlayer,Player otherPlayer) {
         DiceRolls rand = new DiceRolls();
         rand.rollDice();
         rand.printState();
@@ -54,10 +60,12 @@ public class Game {
         if (rockNumber >= 1 && rockNumber <= availableRocks.length) {
             String diceResult = rand.countOnesAndNameState();
             Move.DoMove(availableRocks[rockNumber - 1], board, diceResult);
-            System.out.println("counter : " + availableRocks[rockNumber - 1].counter);
+            boolean x = Rules.kill(board,availableRocks[rockNumber - 1], otherPlayer.getPlayRocks());
+            System.out.println("counter : " + x);
             board.printBoard();
         } else {
             System.out.println("Invalid rock number!");
         }
+
     }
 }

@@ -1,6 +1,6 @@
 public class Player {
     private String name;
-    private PlayRock[] playRocks;
+    private static PlayRock[] playRocks;
     private Board board;
     int id;
 
@@ -18,9 +18,18 @@ public class Player {
         return name;
     }
 
-    public PlayRock[] getPlayRocks() {
+    public static PlayRock[] getPlayRocks() {
         return playRocks;
     }
+    public static boolean hasWon() {
+        for (PlayRock rock : getPlayRocks()) {
+            if (!rock.finish) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
+
 
 
