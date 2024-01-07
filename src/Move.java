@@ -70,7 +70,7 @@ public class Move {
                     board.printBoard();
                 }
             }
-                break;
+            break;
             case "Bunja" :
             {
                 System.out.println("You rolled a " + diceResult + "! Choose an option:");
@@ -165,6 +165,5 @@ public class Move {
                 break;
         }}
 
-    }
-
+}
 

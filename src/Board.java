@@ -29,19 +29,24 @@ public class Board {
 
     public void setPieceInPath(int position,PlayRock playRock) {
         path[position] = playRock;
+        playRock.setPosition(position);
     }
 
 
-    public void removePieceFromPath(int position) {
+    public void removePieceFromPath(int position,PlayRock playRock) {
         path[position] = null;
+        playRock.setPosition(-1);
+
     }
 
     public void setPieceInPlayerKitchen(int position,PlayRock playRock) {
         if (playRock.getPlayer().id == 1) {
             player1Kitchen[position] =playRock;
+            playRock.setPosition(position);
         }
         else {
             player2Kitchen[position] = playRock;
+            playRock.setPosition(position);
         }
 
     }
@@ -50,9 +55,11 @@ public class Board {
     public void removePieceFromPlayerKitchen(int position,PlayRock playRock) {
         if (playRock.getPlayer().id == 1) {
             player1Kitchen[position] =null;
+            playRock.setPosition(-1);
         }
         else {
             player2Kitchen[position] = null;
+            playRock.setPosition(-1);
         }
     }
 
@@ -102,7 +109,7 @@ public class Board {
                 if (playRock.getPosition() >= 0 && playRock.getPosition() <= (road.length - 1)) {
                     removePieceFromPlayerKitchen(playRock.getPosition(), playRock);
                 }
-                playRock.setPosition(playRock.getPosition() + totalSteps);
+//                playRock.setPosition(playRock.getPosition() + totalSteps);
             }
         }
         else {
@@ -112,7 +119,7 @@ public class Board {
                 System.out.println("ssssssssssssssss : " + steps);
 
                 if (playRock.getPlayer().id == 1) {
-                    playRock.setPosition(-1);
+//                    playRock.setPosition(-1);
                     movePlayRockInPath(playRock, steps, path);
                 }
                 else {
@@ -124,7 +131,7 @@ public class Board {
         else {
             setPieceInPlayerKitchen(playRock.getPosition()+totalSteps,playRock);
             removePieceFromPlayerKitchen(playRock.getPosition(),playRock);
-            playRock.setPosition(playRock.getPosition()+totalSteps);
+//            playRock.setPosition(playRock.getPosition()+totalSteps);
         }
         }
 
@@ -138,9 +145,9 @@ public class Board {
             int stepsToEnd = road.length - playRock.getPosition() - 1;
             int restOfSteps = totalSteps - stepsToEnd - 1;
             System.out.println("rest : " + ( playRock.getPosition()+totalSteps - (road.length - 1)));
-            removePieceFromPath(playRock.getPosition());
+            removePieceFromPath(playRock.getPosition(),playRock);
             setPieceInPath(restOfSteps,playRock);
-            playRock.setPosition(restOfSteps);
+//            playRock.setPosition(restOfSteps);
             playRock.counter += totalSteps;
         }
         else {
@@ -148,9 +155,9 @@ public class Board {
         {
             playRock.tastee7=true;
             playRock.isInTheKitchen=true;
-            removePieceFromPath(playRock.getPosition());
+            removePieceFromPath(playRock.getPosition(),playRock);
             int steps = playRock.counter + totalSteps - (road.length);
-            playRock.setPosition(-1);
+//            playRock.setPosition(-1);
             movePlayRockInKitchen(playRock,steps, path);
         }
         else {
@@ -159,9 +166,9 @@ public class Board {
             playRock.counter += totalSteps;
             setPieceInPath(playRock.getPosition()+totalSteps,playRock);
             if (playRock.getPosition() >= 0 && playRock.getPosition() <= (road.length-1)) {
-                removePieceFromPath(playRock.getPosition());
+                removePieceFromPath(playRock.getPosition(),playRock);
             }
-            playRock.setPosition(playRock.getPosition()+totalSteps);
+//            playRock.setPosition(playRock.getPosition()+totalSteps);
         }
         }
     }

@@ -19,7 +19,8 @@ public class Game {
         while (true) {
             Player currentPlayer = turn ? player1 : player2;
             Player otherPlayer = turn ? player2 : player1;
-            if (currentPlayer.hasWon()) {
+            turn = !turn;
+            if (currentPlayer.hasWon(currentPlayer.getPlayRocks())) {
                 scanner.close();
                 System.out.println("sahozy : "+currentPlayer.getName() + " has won the game!");
                 break;
@@ -39,7 +40,7 @@ public class Game {
         }
 
         scanner.close();
-        System.out.println("Game over. Thank you for playing!");
+        System.out.println("sahozy : Game over. Thank you for playing!");
     }
 
     private void handleDiceRollAndMove(Player currentPlayer,Player otherPlayer) {
@@ -48,14 +49,14 @@ public class Game {
         rand.printState();
 
         PlayRock[] availableRocks = currentPlayer.getPlayRocks();
-        System.out.println("Available rocks for " + currentPlayer.getName() + ":");
+        System.out.println("sahozy : Available rocks for " + currentPlayer.getName() + ":");
         for (int i = 0; i < availableRocks.length; i++) {
             if (!availableRocks[i].finish) {
                 System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i].getPosition());
             }
         }
 
-        System.out.println("Choose a rock number to move:");
+        System.out.println("sahozy : Choose a rock number to move:");
         int rockNumber = scanner.nextInt();
         if (rockNumber >= 1 && rockNumber <= availableRocks.length) {
             String diceResult = rand.countOnesAndNameState();
