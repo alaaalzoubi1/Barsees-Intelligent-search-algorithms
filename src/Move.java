@@ -10,8 +10,7 @@ public class Move {
 //    }
     public static void DoMove(PlayRock playRock, Board board,String diceResult)
     {
-        DiceRolls diceRolls = new DiceRolls();
-        String x =  diceRolls.countOnesAndNameState();
+        String x = diceResult ;
 
         if (x.equals("Dest") || x.equals("Bunja")) {
             System.out.println("You rolled a " + diceResult + "! Choose an option:");
