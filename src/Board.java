@@ -95,19 +95,21 @@ public class Board {
                 playRock.finish = true;
                 removePieceFromPlayerKitchen(playRock.getPosition(),playRock);
                 System.out.println("مبروك عليك ربع مليون دولار");
-//                System.exit(0);
             }
-            setPieceInPlayerKitchen(playRock.getPosition()+totalSteps ,playRock);
+            else {
+                setPieceInPlayerKitchen(playRock.getPosition() + totalSteps, playRock);
 
-            if (playRock.getPosition() >= 0 && playRock.getPosition() <= (road.length-1)) {
-                removePieceFromPlayerKitchen(playRock.getPosition(),playRock);
+                if (playRock.getPosition() >= 0 && playRock.getPosition() <= (road.length - 1)) {
+                    removePieceFromPlayerKitchen(playRock.getPosition(), playRock);
+                }
+                playRock.setPosition(playRock.getPosition() + totalSteps);
             }
-            playRock.setPosition(playRock.getPosition()+totalSteps);
         }
         else {
             if (totalSteps >= road.length - playRock.getPosition()) {
                 removePieceFromPlayerKitchen(playRock.getPosition(),playRock);
                 int steps = totalSteps + playRock.getPosition() - (road.length-1);
+                System.out.println("ssssssssssssssss : " + steps);
 
                 if (playRock.getPlayer().id == 1) {
                     playRock.setPosition(-1);
@@ -129,19 +131,20 @@ public class Board {
     }
     public void movePlayRockInPath(PlayRock playRock, int totalSteps, PlayRock[] road)
     {
+
         if (playRock.getPosition()+totalSteps > road.length-1)
         {
 
-            int restOfSteps = playRock.getPosition()+totalSteps - (road.length-1);
-            System.out.println("rest : " + ( playRock.getPosition()+totalSteps - (road.length)));
+            int stepsToEnd = road.length - playRock.getPosition() - 1;
+            int restOfSteps = totalSteps - stepsToEnd - 1;
+            System.out.println("rest : " + ( playRock.getPosition()+totalSteps - (road.length - 1)));
             removePieceFromPath(playRock.getPosition());
             setPieceInPath(restOfSteps,playRock);
             playRock.setPosition(restOfSteps);
             playRock.counter += totalSteps;
         }
         else {
-        System.out.println("counter : " +playRock.counter);
-        if(playRock.counter >= path.length - 1)
+        if(playRock.counter + totalSteps > path.length )
         {
             playRock.tastee7=true;
             playRock.isInTheKitchen=true;
