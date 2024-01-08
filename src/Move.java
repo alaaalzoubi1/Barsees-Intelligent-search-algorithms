@@ -4,15 +4,14 @@ public class Move {
 
     public static void DoMove(PlayRock playRock, Board board,String diceResult)
     {
-        String x = "Dest" ;
+        String x = diceResult ;
 
         switch (x)
         {
             case "Dest" :
             {
                 System.out.println("You rolled a " + diceResult + "! Choose an option:");
-                System.out.println("1. Add a new rock to the board");
-                System.out.println("2. Move an available rock 1 position");
+                System.out.println("1. Add a new rock to the board\n2. Move an available rock 1 position");
 
                 Scanner scanner = new Scanner(System.in);
                 int choice = scanner.nextInt();
@@ -99,7 +98,6 @@ public class Move {
                     } else {
                         board.movePlayRockInPath(player.getPlayRocks()[rockNumber], 10, board.getPath());
                     }
-                    System.out.println("counter : " + player.getPlayRocks()[rockNumber].counter);
 
                 }
                 else if (choice == 2) {

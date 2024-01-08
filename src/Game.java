@@ -19,7 +19,7 @@ public class Game {
         while (true) {
             Player currentPlayer = turn ? player1 : player2;
             Player otherPlayer = turn ? player2 : player1;
-            turn = !turn;
+
             if (currentPlayer.hasWon(currentPlayer.getPlayRocks())) {
                 scanner.close();
                 System.out.println("sahozy : "+currentPlayer.getName() + " has won the game!");
@@ -35,7 +35,6 @@ public class Game {
             } else {
                 System.out.println("sahozy : Invalid input!");
             }
-
             turn = !turn;
         }
 
@@ -47,7 +46,29 @@ public class Game {
         DiceRolls rand = new DiceRolls();
         rand.rollDice();
         rand.printState();
+        boolean notAllRocksOutBoard = false;
 
+        for (PlayRock rock: currentPlayer.getPlayRocks()) {
+
+            if (rock.getPosition()!=-1) {
+                System.out.println(rock.getPosition());
+                notAllRocksOutBoard = true;
+                break;
+            }
+
+
+        }
+        if (!notAllRocksOutBoard) {
+            for(int j=0;j<=1;j++){
+                if(rand.countOnesAndNameState()!="Dest" && rand.countOnesAndNameState()!="Bunja"){
+                    rand.rollDice();
+                    rand.printState();
+                }
+            }
+            if (rand.countOnesAndNameState()!="Dest" && rand.countOnesAndNameState()!="Bunja"){
+                return;
+            }
+        }
         PlayRock[] availableRocks = currentPlayer.getPlayRocks();
         System.out.println("sahozy : Available rocks for " + currentPlayer.getName() + ":");
         for (int i = 0; i < availableRocks.length; i++) {
@@ -62,7 +83,7 @@ public class Game {
             String diceResult = rand.countOnesAndNameState();
             Move.DoMove(availableRocks[rockNumber - 1], board, diceResult);
             boolean x = Rules.kill(board,availableRocks[rockNumber - 1], otherPlayer.getPlayRocks());
-            System.out.println("counter : " + x);
+            System.out.println("counter : " + availableRocks[rockNumber - 1].counter);
             board.printBoard();
         } else {
             System.out.println("Invalid rock number!");
