@@ -31,7 +31,7 @@ public class PlayRock {
     public String toString() {
         return "PlayRock{" +
                 "player=" + player.getName() +
-                ", position=" + position +
+                ", position=" + this.position +
                 ", tastee7=" + tastee7 +
                 ", counter=" + counter +
                 ", isInTheKitchen=" + isInTheKitchen +
