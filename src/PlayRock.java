@@ -27,4 +27,17 @@ public class PlayRock {
         this.position = position;
 
     }
+    @Override
+    public String toString() {
+        return "PlayRock{" +
+                "player=" + player.getName() +
+                ", position=" + position +
+                ", tastee7=" + tastee7 +
+                ", counter=" + counter +
+                ", isInTheKitchen=" + isInTheKitchen +
+                ", finish=" + finish +
+                '}';
+    }
+
 }
+

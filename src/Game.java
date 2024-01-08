@@ -8,7 +8,7 @@ public class Game {
     private Player player2;
 
     public Game() {
-        this.turn = true;
+        this.turn = false;
         this.scanner = new Scanner(System.in);
         this.board = new Board(12, 4);
         this.player1 = new Player("EMPLOYEE", board, 1);
@@ -35,7 +35,7 @@ public class Game {
             } else {
                 System.out.println("sahozy : Invalid input!");
             }
-            turn = !turn;
+            turn = turn;
         }
 
         scanner.close();
@@ -73,7 +73,7 @@ public class Game {
         System.out.println("sahozy : Available rocks for " + currentPlayer.getName() + ":");
         for (int i = 0; i < availableRocks.length; i++) {
             if (!availableRocks[i].finish) {
-                System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i].getPosition());
+                System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i]);
             }
         }
 

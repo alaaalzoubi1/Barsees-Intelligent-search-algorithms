@@ -27,7 +27,7 @@ public class Move {
                     for (int i = 0; i < availableRocks.length; i++) {
                         if (!availableRocks[i].finish && availableRocks[i].getPosition() != -1)
                         {
-                            System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i].getPosition());
+                            System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i]);
                         }
                     }
                     rockNumber = scanner.nextInt() - 1;
@@ -42,7 +42,7 @@ public class Move {
                 else if (choice == 2) {
                     for (int i = 0; i < availableRocks.length; i++) {
                         if (!availableRocks[i].finish && availableRocks[i].getPosition() != -1) {
-                            System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i].getPosition());
+                            System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i]);
                         }
                     }
                     System.out.println("sahozy : choose play rock to move (1)  ");
@@ -55,7 +55,7 @@ public class Move {
                     board.printBoard();
                     for (int i = 0; i < availableRocks.length; i++) {
                         if (!availableRocks[i].finish && availableRocks[i].getPosition() != -1) {
-                            System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i].getPosition());
+                            System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i]);
                         }
                     }
                     System.out.println("sahozy : choose play rock to move (10)  ");
@@ -89,7 +89,7 @@ public class Move {
                     for (int i = 0; i < availableRocks.length; i++) {
                         if (!availableRocks[i].finish && availableRocks[i].getPosition() != -1)
                         {
-                            System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i].getPosition());
+                            System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i]);
                         }
                     }
                     int rockNumber = scanner.nextInt() - 1;
