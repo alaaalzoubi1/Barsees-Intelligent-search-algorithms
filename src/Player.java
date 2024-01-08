@@ -4,7 +4,7 @@ public class Player {
     private Board board;
     int id;
 
-    public Player(String name, Board board,int id) {
+    public Player(String name, Board board, int id) {
         this.name = name;
         this.board = board;
         this.playRocks = new PlayRock[4];
@@ -21,7 +21,8 @@ public class Player {
     public PlayRock[] getPlayRocks() {
         return playRocks;
     }
-    public static boolean hasWon(PlayRock [] playRocks) {
+
+    public static boolean hasWon(PlayRock[] playRocks) {
         for (PlayRock rock : playRocks) {
             if (!rock.finish) {
                 return false;

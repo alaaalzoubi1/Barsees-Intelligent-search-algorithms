@@ -22,7 +22,7 @@ public class Game {
 
             if (currentPlayer.hasWon(currentPlayer.getPlayRocks())) {
                 scanner.close();
-                System.out.println("sahozy : "+currentPlayer.getName() + " has won the game!");
+                System.out.println("sahozy : " + currentPlayer.getName() + " has won the game!");
                 break;
             }
             System.out.println("sahozy : Press 1 to roll the dice or 0 to exit : player : " + currentPlayer.getName());
@@ -31,7 +31,7 @@ public class Game {
             if (input == 0) {
                 break;
             } else if (input == 1) {
-                handleDiceRollAndMove(currentPlayer,otherPlayer);
+                handleDiceRollAndMove(currentPlayer, otherPlayer);
             } else {
                 System.out.println("sahozy : Invalid input!");
             }
@@ -42,15 +42,15 @@ public class Game {
         System.out.println("sahozy : Game over. Thank you for playing!");
     }
 
-    private void handleDiceRollAndMove(Player currentPlayer,Player otherPlayer) {
+    private void handleDiceRollAndMove(Player currentPlayer, Player otherPlayer) {
         DiceRolls rand = new DiceRolls();
         rand.rollDice();
         rand.printState();
         boolean notAllRocksOutBoard = false;
 
-        for (PlayRock rock: currentPlayer.getPlayRocks()) {
+        for (PlayRock rock : currentPlayer.getPlayRocks()) {
 
-            if (rock.getPosition()!=-1) {
+            if (rock.getPosition() != -1) {
                 System.out.println(rock.getPosition());
                 notAllRocksOutBoard = true;
                 break;
@@ -59,13 +59,13 @@ public class Game {
 
         }
         if (!notAllRocksOutBoard) {
-            for(int j=0;j<=1;j++){
-                if(rand.countOnesAndNameState()!="Dest" && rand.countOnesAndNameState()!="Bunja"){
+            for (int j = 0; j <= 1; j++) {
+                if (rand.countOnesAndNameState() != "Dest" && rand.countOnesAndNameState() != "Bunja") {
                     rand.rollDice();
                     rand.printState();
                 }
             }
-            if (rand.countOnesAndNameState()!="Dest" && rand.countOnesAndNameState()!="Bunja"){
+            if (rand.countOnesAndNameState() != "Dest" && rand.countOnesAndNameState() != "Bunja") {
                 return;
             }
         }
@@ -82,8 +82,7 @@ public class Game {
         if (rockNumber >= 1 && rockNumber <= availableRocks.length) {
             String diceResult = rand.countOnesAndNameState();
             Move.DoMove(availableRocks[rockNumber - 1], board, diceResult);
-            boolean x = Rules.kill(board,availableRocks[rockNumber - 1], otherPlayer.getPlayRocks());
-            System.out.println("counter : " + availableRocks[rockNumber - 1].counter);
+            boolean x = Rules.kill(board, availableRocks[rockNumber - 1], otherPlayer.getPlayRocks());
             board.printBoard();
         } else {
             System.out.println("Invalid rock number!");

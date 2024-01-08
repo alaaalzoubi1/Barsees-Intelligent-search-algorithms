@@ -7,7 +7,7 @@ public class DiceRolls {
 
     public void rollDice() {
         for (int i = 0; i < 6; i++) {
-            rolls[i] = (int)(Math.random() * 2) + 1;
+            rolls[i] = (int) (Math.random() * 2) + 1;
         }
     }
 
@@ -43,6 +43,7 @@ public class DiceRolls {
         }
         System.out.println();
     }
+
     public void printState() {
         String state = countOnesAndNameState();
         System.out.println("Current state: " + state);

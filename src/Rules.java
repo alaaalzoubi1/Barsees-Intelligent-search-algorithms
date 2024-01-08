@@ -1,12 +1,12 @@
 public class Rules {
     static int[] safeBlocks = {6};
-    public static boolean kill (Board board,PlayRock playRock1,PlayRock[] playRock2)
-    {
+
+    public static boolean kill(Board board, PlayRock playRock1, PlayRock[] playRock2) {
         boolean isSafe = false;
         if (playRock1.getPosition() != -1 && !playRock1.isInTheKitchen) {
             for (PlayRock rock : playRock2) {
                 for (int i = 0; i < safeBlocks.length; i++) {
-                    if (rock.getPosition() == safeBlocks[i]){
+                    if (rock.getPosition() == safeBlocks[i]) {
                         isSafe = true;
                         break;
                     }

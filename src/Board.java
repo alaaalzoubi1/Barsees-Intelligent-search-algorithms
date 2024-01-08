@@ -17,8 +17,7 @@ public class Board {
     public PlayRock[] getPlayerKitchen(PlayRock playRock) {
         if (playRock.getPlayer().id == 1) {
             return player1Kitchen;
-        }
-        else {
+        } else {
             return player2Kitchen;
         }
 
@@ -26,8 +25,7 @@ public class Board {
     }
 
 
-
-    public void setPieceInPath(int position,PlayRock playRock) {
+    public void setPieceInPath(int position, PlayRock playRock) {
         path[position] = playRock;
     }
 
@@ -38,12 +36,11 @@ public class Board {
 
     }
 
-    public void setPieceInPlayerKitchen(int position,PlayRock playRock) {
+    public void setPieceInPlayerKitchen(int position, PlayRock playRock) {
         if (playRock.getPlayer().id == 1) {
-            player1Kitchen[position] =playRock;
+            player1Kitchen[position] = playRock;
             playRock.setPosition(position);
-        }
-        else {
+        } else {
             player2Kitchen[position] = playRock;
             playRock.setPosition(position);
         }
@@ -51,12 +48,11 @@ public class Board {
     }
 
 
-    public void removePieceFromPlayerKitchen(int position,PlayRock playRock) {
+    public void removePieceFromPlayerKitchen(int position, PlayRock playRock) {
         if (playRock.getPlayer().id == 1) {
-            player1Kitchen[position] =null;
+            player1Kitchen[position] = null;
 //            playRock.setPosition(-1);
-        }
-        else {
+        } else {
             player2Kitchen[position] = null;
 //            playRock.setPosition(-1);
         }
@@ -94,17 +90,19 @@ public class Board {
             }
         }
     }
+
     public void movePlayRockInKitchen(PlayRock playRock, int totalSteps, PlayRock[] road) {
         if (playRock.tastee7) {
-            if (isMatbokh(playRock,totalSteps))
-            {
+            if (isMatbokh(playRock, totalSteps)) {
                 System.out.println(" DDAAAAAaaaaaaaaaaaaaaaaaaaaaaaaMmmmmmmmmmmmmmmmmmmmmmN");
                 playRock.finish = true;
-                removePieceFromPlayerKitchen(playRock.getPosition(),playRock);
+                removePieceFromPlayerKitchen(playRock.getPosition(), playRock);
                 playRock.setPosition(-1);
                 System.out.println("مبروك عليك ربع مليون دولار");
             }
-            else {
+            if (totalSteps + playRock.getPosition() > road.length) {
+                System.out.println("you cant move this rock");
+            } else {
                 if (playRock.getPosition() >= 0 && playRock.getPosition() <= (road.length - 1)) {
                     removePieceFromPlayerKitchen(playRock.getPosition(), playRock);
                 }
@@ -112,35 +110,32 @@ public class Board {
 
 
             }
-        }
-        else {
+        } else {
             if (totalSteps >= road.length - playRock.getPosition()) {
-                removePieceFromPlayerKitchen(playRock.getPosition(),playRock);
-                int steps = totalSteps + playRock.getPosition() - (road.length-1);
+                removePieceFromPlayerKitchen(playRock.getPosition(), playRock);
+                int steps = totalSteps + playRock.getPosition() - (road.length - 1);
                 System.out.println("ssssssssssssssss : " + steps);
 
                 if (playRock.getPlayer().id == 1) {
                     playRock.setPosition(-1);
                     movePlayRockInPath(playRock, steps, path);
-                }
-                else {
-                    playRock.setPosition(((path.length)/2)-1);
-                    movePlayRockInPath(playRock,steps,path);
+                } else {
+                    playRock.setPosition(((path.length) / 2) - 1);
+                    movePlayRockInPath(playRock, steps, path);
                 }
                 playRock.isInTheKitchen = false;
+            } else {
+                setPieceInPlayerKitchen(playRock.getPosition() + totalSteps, playRock);
+                removePieceFromPlayerKitchen(playRock.getPosition(), playRock);
+                playRock.setPosition(playRock.getPosition() + totalSteps);
             }
-        else {
-            setPieceInPlayerKitchen(playRock.getPosition()+totalSteps,playRock);
-            removePieceFromPlayerKitchen(playRock.getPosition(),playRock);
-            playRock.setPosition(playRock.getPosition()+totalSteps);
-        }
         }
 
     }
-    public void movePlayRockInPath(PlayRock playRock, int totalSteps, PlayRock[] road)
-    {
 
-        if(playRock.counter + totalSteps > path.length-1 && playRock.getPlayer().id==1) {
+    public void movePlayRockInPath(PlayRock playRock, int totalSteps, PlayRock[] road) {
+
+        if (playRock.counter + totalSteps > path.length - 1 && playRock.getPlayer().id == 1) {
             playRock.tastee7 = true;
             playRock.isInTheKitchen = true;
             removePieceFromPath(playRock.getPosition());
@@ -148,8 +143,7 @@ public class Board {
             playRock.setPosition(-1);
             movePlayRockInKitchen(playRock, steps, path);
 
-        }
-        else if(playRock.counter + totalSteps > path.length && playRock.getPlayer().id==2) {
+        } else if (playRock.counter + totalSteps > path.length && playRock.getPlayer().id == 2) {
             playRock.tastee7 = true;
             playRock.isInTheKitchen = true;
             removePieceFromPath(playRock.getPosition());
@@ -158,8 +152,7 @@ public class Board {
             System.out.println("steps : " + steps + " position" + playRock.getPosition());
             movePlayRockInKitchen(playRock, steps, path);
 
-        }
-        else {
+        } else {
             if (playRock.getPosition() + totalSteps > road.length - 1) {
 
                 int stepsToEnd = road.length - playRock.getPosition() - 1;
@@ -185,10 +178,10 @@ public class Board {
         }
 
 
-}
-    public boolean isMatbokh(PlayRock playRock,int totalSteps)
-    {
-        if (playRock.getPosition()+totalSteps == getPlayerKitchen(playRock).length){
+    }
+
+    public boolean isMatbokh(PlayRock playRock, int totalSteps) {
+        if (playRock.getPosition() + totalSteps == getPlayerKitchen(playRock).length) {
             return true;
         }
         return false;

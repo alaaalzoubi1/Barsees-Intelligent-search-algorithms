@@ -7,12 +7,13 @@ public class PlayRock {
     boolean finish;
     private Board board;
 
-    public PlayRock(Player player, Board board){
+
+    public PlayRock(Player player, Board board) {
         this.player = player;
         this.board = board;
         this.position = -1;
-        this.tastee7=false;
-        this.counter=-1;
+        this.tastee7 = false;
+        this.counter = -1;
     }
 
     public Player getPlayer() {
@@ -27,6 +28,7 @@ public class PlayRock {
         this.position = position;
 
     }
+
     @Override
     public String toString() {
         return "PlayRock{" +
