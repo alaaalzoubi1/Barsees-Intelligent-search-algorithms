@@ -59,7 +59,7 @@ public class Board {
     }
 
 
-    public void printBoard() {
+    public Object printBoard() {
         System.out.println("Path:");
         for (int i = 0; i < path.length; i++) {
             System.out.print("Position " + i + ": ");
@@ -89,6 +89,7 @@ public class Board {
                 System.out.println("Empty");
             }
         }
+        return null;
     }
 
     public void movePlayRockInKitchen(PlayRock playRock, int totalSteps, PlayRock[] road) {
@@ -99,16 +100,13 @@ public class Board {
                 removePieceFromPlayerKitchen(playRock.getPosition(), playRock);
                 playRock.setPosition(-1);
                 System.out.println("مبروك عليك ربع مليون دولار");
-            }
-            if (totalSteps + playRock.getPosition() > road.length) {
+            } else if (totalSteps + playRock.getPosition() > road.length) {
                 System.out.println("you cant move this rock");
             } else {
                 if (playRock.getPosition() >= 0 && playRock.getPosition() <= (road.length - 1)) {
                     removePieceFromPlayerKitchen(playRock.getPosition(), playRock);
                 }
                 setPieceInPlayerKitchen(playRock.getPosition() + totalSteps, playRock);
-
-
             }
         } else {
             if (totalSteps >= road.length - playRock.getPosition()) {

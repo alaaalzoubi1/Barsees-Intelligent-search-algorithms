@@ -11,7 +11,7 @@ public class PlayRock {
     public PlayRock(Player player, Board board) {
         this.player = player;
         this.board = board;
-        this.position = -1;
+        this.position = 0;
         this.tastee7 = false;
         this.counter = -1;
     }
@@ -33,7 +33,7 @@ public class PlayRock {
     public String toString() {
         return "PlayRock{" +
                 "player=" + player.getName() +
-                ", position=" + this.position +
+                ", position=" + position +
                 ", tastee7=" + tastee7 +
                 ", counter=" + counter +
                 ", isInTheKitchen=" + isInTheKitchen +

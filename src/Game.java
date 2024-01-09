@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Game {
@@ -8,7 +9,7 @@ public class Game {
     private Player player2;
 
     public Game() {
-        this.turn = false;
+        this.turn = true;
         this.scanner = new Scanner(System.in);
         this.board = new Board(12, 4);
         this.player1 = new Player("EMPLOYEE", board, 1);
@@ -17,8 +18,14 @@ public class Game {
 
     public void run() {
         while (true) {
+            DiceRolls rand = new DiceRolls();
+            rand.rollDice();
+
             Player currentPlayer = turn ? player1 : player2;
             Player otherPlayer = turn ? player2 : player1;
+            State state = new State(board,currentPlayer,otherPlayer,true,rand);
+            List<State> nextStates= state.getNextStates();
+
 
             if (currentPlayer.hasWon(currentPlayer.getPlayRocks())) {
                 scanner.close();
@@ -31,20 +38,18 @@ public class Game {
             if (input == 0) {
                 break;
             } else if (input == 1) {
-                handleDiceRollAndMove(currentPlayer, otherPlayer);
+                handleDiceRollAndMove(currentPlayer, otherPlayer,rand);
             } else {
                 System.out.println("sahozy : Invalid input!");
             }
-            turn = turn;
+            turn = !turn;
         }
 
         scanner.close();
         System.out.println("sahozy : Game over. Thank you for playing!");
     }
 
-    private void handleDiceRollAndMove(Player currentPlayer, Player otherPlayer) {
-        DiceRolls rand = new DiceRolls();
-        rand.rollDice();
+    private void handleDiceRollAndMove(Player currentPlayer, Player otherPlayer,DiceRolls rand) {
         rand.printState();
         boolean notAllRocksOutBoard = false;
 

@@ -106,6 +106,7 @@ public class Move {
             break;
             case "Duwag":
                 if (playRock.isInTheKitchen) {
+
                     board.movePlayRockInKitchen(playRock, 2, board.getPlayerKitchen(playRock));
                 } else {
                     board.movePlayRockInPath(playRock, 2, board.getPath());
@@ -113,7 +114,9 @@ public class Move {
                 break;
             case "Thalatha":
                 if (playRock.isInTheKitchen) {
+                    System.out.println(playRock.getPosition());
                     board.movePlayRockInKitchen(playRock, 3, board.getPlayerKitchen(playRock));
+                    System.out.println(playRock.getPosition());
                 } else {
                     board.movePlayRockInPath(playRock, 3, board.getPath());
                 }

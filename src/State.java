@@ -9,12 +9,14 @@ public class State {
     private DiceRolls diceRolls;
 
     public State(Board board, Player player1, Player player2, boolean isPlayer1Turn, DiceRolls diceRolls) {
-        this.board = new Board(board.getPath().length, board.getPlayerKitchen(null).length); // Assuming null can be used to get kitchen size
+        this.board = new Board(board.getPath().length, board.getPlayerKitchen(player1.getPlayRocks()[1]).length);
         this.currentPlayer = isPlayer1Turn ? player1 : player2;
         this.otherPlayer = isPlayer1Turn ? player2 : player1;
         this.isPlayer1Turn = isPlayer1Turn;
         this.diceRolls = diceRolls;
 
+        // Copy the board state including the play rocks
+        copyBoardState(board, this.board);
     }
 
     private void copyBoardState(Board originalBoard, Board newBoard) {
@@ -77,16 +79,20 @@ public class State {
             // Check if the rock can make a valid move
             if (canMoveRock(rock, steps)) { // This function needs to be defined to check if the rock can move
                 // Create a copy of the board to modify
-                Board newBoard = new Board(board.getPath().length, board.getPlayerKitchen(null).length);
+                Board newBoard = new Board(board.getPath().length, board.getPlayerKitchen(currentPlayer.getPlayRocks()[1]).length);
                 copyBoardState(this.board, newBoard);
 
-                // Create a new state representing the move
-                if (rock.isInTheKitchen) {
-                    newBoard.movePlayRockInKitchen(rock, steps, newBoard.getPlayerKitchen(rock));
-                } else {
-                    newBoard.movePlayRockInPath(rock, steps, newBoard.getPath());
-                }
+                // Create a deep copy of the PlayRock
+                PlayRock rockCopy = new PlayRock(rock.getPlayer(), newBoard);
+                rockCopy.setPosition(rock.getPosition());
+                rockCopy.tastee7 = rock.tastee7;
+                rockCopy.counter = rock.counter;
+                rockCopy.isInTheKitchen = rock.isInTheKitchen;
+                rockCopy.finish = rock.finish;
 
+                // Perform the move on the copy of the PlayRock
+                Move.DoMove(rockCopy, newBoard, diceResult);
+//                System.out.println("dddddddddddd :" + rockCopy.getPosition()+ " ddddddddd : " + diceResult + newBoard.printBoard());
                 // Switch turns
                 boolean nextPlayerTurn = !this.isPlayer1Turn; // Assuming a two-player game
                 Player nextPlayer = nextPlayerTurn ? currentPlayer : otherPlayer;
@@ -94,11 +100,13 @@ public class State {
                 // Create the new state and add it to the list of successors
                 State successorState = new State(newBoard, currentPlayer, otherPlayer, nextPlayerTurn, diceRolls);
                 successors.add(successorState);
+                System.out.println(successorState);
             }
         }
 
         return successors;
     }
+
     private int convertDiceResultToSteps(String diceResult) {
         // Mapping dice results to steps
         switch (diceResult) {
@@ -146,6 +154,26 @@ public class State {
         // If none of the above conditions are met, the rock cannot move
         return false;
     }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Current Player: ").append(currentPlayer.getName()).append("\n");
+        sb.append("PlayRocks:\n");
+        for (PlayRock rock : currentPlayer.getPlayRocks()) {
+            sb.append("PlayRock: ").append(rock.toString()).append("\n");
+        }
+        sb.append("Other Player: ").append(otherPlayer.getName()).append("\n");
+        sb.append("PlayRocks:\n");
+        for (PlayRock rock : otherPlayer.getPlayRocks()) {
+            sb.append("PlayRock: ").append(rock.toString()).append("\n");
+        }
+        sb.append("Is Player 1's Turn: ").append(isPlayer1Turn).append("\n");
+        sb.append("Dice Rolls: ").append(diceRolls.countOnesAndNameState()).append("\n");
+        sb.append("Board:\n").append(board.printBoard());
+
+        return sb.toString();
+    }
+
 }
 
     // Other methods to manipulate the state, check for end conditions, generate successors, etc.
