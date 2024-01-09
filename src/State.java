@@ -114,6 +114,7 @@ public class State {
 //        return successors;
 //    }
 public List<State> getNextStates() {
+    int i = 0;
     List<State> successors = new ArrayList<>();
     String diceResult = diceRolls.countOnesAndNameState();
     int steps = convertDiceResultToSteps(diceResult);
@@ -122,17 +123,19 @@ public List<State> getNextStates() {
         if (canMoveRock(rock, steps)) {
             Board newBoard = new Board(board.getPath().length, board.getPlayerKitchen(currentPlayer.getPlayRocks()[1]).length);
             copyBoardState(this.board, newBoard);
+            Player currentCopy = new Player(currentPlayer);
 
             // Create a copy of the PlayRock using the copy constructor
 
-            Move.DoMove(rock, newBoard, diceResult);
+            Move.DoMove(currentCopy.getPlayRocks()[i], newBoard, diceResult);
 
             boolean nextPlayerTurn = !this.isPlayer1Turn;
             Player nextPlayer = nextPlayerTurn ? currentPlayer : otherPlayer;
 
-            State successorState = new State(newBoard, currentPlayer, otherPlayer, nextPlayerTurn, diceRolls);
+            State successorState = new State(newBoard, currentCopy, otherPlayer, nextPlayerTurn, diceRolls);
             successors.add(successorState);
             System.out.println(successorState);
+            i++;
         }
     }
 
