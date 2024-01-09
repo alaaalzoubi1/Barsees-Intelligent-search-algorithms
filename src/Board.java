@@ -97,8 +97,9 @@ public class Board {
             if (isMatbokh(playRock, totalSteps)) {
                 System.out.println(" DDAAAAAaaaaaaaaaaaaaaaaaaaaaaaaMmmmmmmmmmmmmmmmmmmmmmN");
                 playRock.finish = true;
-                if (playRock.isInTheKitchen)
+                if (playRock.isInTheKitchen) {
                     removePieceFromPlayerKitchen(playRock.getPosition(), playRock);
+                }
                 playRock.setPosition(-1);
                 System.out.println("مبروك عليك ربع مليون دولار");
             } else if (totalSteps + playRock.getPosition() > road.length) {
