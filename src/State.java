@@ -10,14 +10,21 @@ public class State {
 
     public State(Board board, Player player1, Player player2, boolean isPlayer1Turn, DiceRolls diceRolls) {
         this.board = new Board(board.getPath().length, board.getPlayerKitchen(player1.getPlayRocks()[1]).length);
-        this.currentPlayer = isPlayer1Turn ? player1 : player2;
-        this.otherPlayer = isPlayer1Turn ? player2 : player1;
+
+        // Create copies of the players using their copy constructors
+        Player copyPlayer1 = new Player(player1);
+        Player copyPlayer2 = new Player(player2);
+
+        // Assign the copies to the currentPlayer and otherPlayer
+        this.currentPlayer = isPlayer1Turn ? copyPlayer1 : copyPlayer2;
+        this.otherPlayer = isPlayer1Turn ? copyPlayer2 : copyPlayer1;
         this.isPlayer1Turn = isPlayer1Turn;
         this.diceRolls = diceRolls;
 
         // Copy the board state including the play rocks
         copyBoardState(board, this.board);
     }
+
 
     private void copyBoardState(Board originalBoard, Board newBoard) {
         copyPlayRocks(originalBoard.getPath(), this.board.getPath());
@@ -67,45 +74,71 @@ public class State {
         result = 31 * result + Arrays.hashCode(board.getPlayerKitchen(new PlayRock(otherPlayer, null)));
         return result;
     }
-    public List<State> getNextStates() {
-        List<State> successors = new ArrayList<>();
+//    public List<State> getNextStates() {
+//        List<State> successors = new ArrayList<>();
+//
+//        // Assuming diceRolls is the result of the last dice roll and determines the possible moves
+//        String diceResult = diceRolls.countOnesAndNameState();
+//        int steps = convertDiceResultToSteps(diceResult); // This function needs to be defined to convert dice result to steps
+//
+//        // Generate moves for current player's rocks
+//        for (PlayRock rock : currentPlayer.getPlayRocks()) {
+//            // Check if the rock can make a valid move
+//            if (canMoveRock(rock, steps)) { // This function needs to be defined to check if the rock can move
+//                // Create a copy of the board to modify
+//                Board newBoard = new Board(board.getPath().length, board.getPlayerKitchen(currentPlayer.getPlayRocks()[1]).length);
+//                copyBoardState(this.board, newBoard);
+//
+//                // Create a deep copy of the PlayRock
+////                PlayRock rockCopy = new PlayRock(rock.getPlayer(), newBoard);
+////                rockCopy.setPosition(rock.getPosition());
+////                rockCopy.tastee7 = rock.tastee7;
+////                rockCopy.counter = rock.counter;
+////                rockCopy.isInTheKitchen = rock.isInTheKitchen;
+////                rockCopy.finish = rock.finish;
+//
+//                // Perform the move on the copy of the PlayRock
+//                Move.DoMove(rock, newBoard, diceResult);
+////                System.out.println("dddddddddddd :" + rockCopy.getPosition()+ " ddddddddd : " + diceResult + newBoard.printBoard());
+//                // Switch turns
+//                boolean nextPlayerTurn = !this.isPlayer1Turn; // Assuming a two-player game
+//                Player nextPlayer = nextPlayerTurn ? currentPlayer : otherPlayer;
+//
+//                // Create the new state and add it to the list of successors
+//                State successorState = new State(newBoard, currentPlayer, otherPlayer, nextPlayerTurn, diceRolls);
+//                successors.add(successorState);
+//                System.out.println(successorState);
+//            }
+//        }
+//
+//        return successors;
+//    }
+public List<State> getNextStates() {
+    List<State> successors = new ArrayList<>();
+    String diceResult = diceRolls.countOnesAndNameState();
+    int steps = convertDiceResultToSteps(diceResult);
 
-        // Assuming diceRolls is the result of the last dice roll and determines the possible moves
-        String diceResult = diceRolls.countOnesAndNameState();
-        int steps = convertDiceResultToSteps(diceResult); // This function needs to be defined to convert dice result to steps
+    for (PlayRock rock : currentPlayer.getPlayRocks()) {
+        if (canMoveRock(rock, steps)) {
+            Board newBoard = new Board(board.getPath().length, board.getPlayerKitchen(currentPlayer.getPlayRocks()[1]).length);
+            copyBoardState(this.board, newBoard);
 
-        // Generate moves for current player's rocks
-        for (PlayRock rock : currentPlayer.getPlayRocks()) {
-            // Check if the rock can make a valid move
-            if (canMoveRock(rock, steps)) { // This function needs to be defined to check if the rock can move
-                // Create a copy of the board to modify
-                Board newBoard = new Board(board.getPath().length, board.getPlayerKitchen(currentPlayer.getPlayRocks()[1]).length);
-                copyBoardState(this.board, newBoard);
+            // Create a copy of the PlayRock using the copy constructor
 
-                // Create a deep copy of the PlayRock
-                PlayRock rockCopy = new PlayRock(rock.getPlayer(), newBoard);
-                rockCopy.setPosition(rock.getPosition());
-                rockCopy.tastee7 = rock.tastee7;
-                rockCopy.counter = rock.counter;
-                rockCopy.isInTheKitchen = rock.isInTheKitchen;
-                rockCopy.finish = rock.finish;
+            Move.DoMove(rock, newBoard, diceResult);
 
-                // Perform the move on the copy of the PlayRock
-                Move.DoMove(rockCopy, newBoard, diceResult);
-//                System.out.println("dddddddddddd :" + rockCopy.getPosition()+ " ddddddddd : " + diceResult + newBoard.printBoard());
-                // Switch turns
-                boolean nextPlayerTurn = !this.isPlayer1Turn; // Assuming a two-player game
-                Player nextPlayer = nextPlayerTurn ? currentPlayer : otherPlayer;
+            boolean nextPlayerTurn = !this.isPlayer1Turn;
+            Player nextPlayer = nextPlayerTurn ? currentPlayer : otherPlayer;
 
-                // Create the new state and add it to the list of successors
-                State successorState = new State(newBoard, currentPlayer, otherPlayer, nextPlayerTurn, diceRolls);
-                successors.add(successorState);
-                System.out.println(successorState);
-            }
+            State successorState = new State(newBoard, currentPlayer, otherPlayer, nextPlayerTurn, diceRolls);
+            successors.add(successorState);
+            System.out.println(successorState);
         }
-
-        return successors;
     }
+
+    return successors;
+}
+
 
     private int convertDiceResultToSteps(String diceResult) {
         // Mapping dice results to steps

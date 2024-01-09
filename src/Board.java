@@ -114,7 +114,6 @@ public class Board {
             if (totalSteps >= road.length - playRock.getPosition()) {
                 removePieceFromPlayerKitchen(playRock.getPosition(), playRock);
                 int steps = totalSteps + playRock.getPosition() - (road.length - 1);
-                System.out.println("ssssssssssssssss : " + steps);
 
                 if (playRock.getPlayer().id == 1) {
                     playRock.setPosition(-1);
@@ -164,7 +163,6 @@ public class Board {
                 playRock.counter += totalSteps;
             } else {
 
-                System.out.println("ttttttttttttt : " + playRock.getPosition());
                 playRock.counter += totalSteps;
                 setPieceInPath(playRock.getPosition() + totalSteps, playRock);
                 if (playRock.getPosition() >= 0 && playRock.getPosition() <= (road.length - 1)) {
