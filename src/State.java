@@ -131,29 +131,37 @@ public class State {
         }
     }
 
-    private boolean canMoveRock(PlayRock rock, int steps) {
+    public boolean canMoveRock(PlayRock rock, int steps) {
+        boolean result;
         // Check if the rock has finished the game
         if (rock.finish) {
-            return false;
+            System.out.println("finished");
+            result= false;
         }
 
         // Check if the rock is in the kitchen and if it can exit or move within the kitchen
-        if (rock.isInTheKitchen) {
-            // Check the specific rules for moving a rock in the kitchen
-            // For example, if a rock can only exit the kitchen with an exact roll
+        if (rock.isInTheKitchen && !rock.tastee7) {
             if (rock.getPosition() + steps <= board.getPlayerKitchen(rock).length) {
-                return true; // The rock can move within or exit the kitchen
-            }
-        } else {
-            // Check if the rock can move on the path without exceeding the board limits
-            // Assuming the path length is a property of the board
-            if (rock.counter + steps <= board.getPath().length) {
-                return true; // The rock can move on the path
-            }
+                System.out.println("rock is in the kitchen and if it can exit or move within the kitchen");
+                result= true;
+            }else result= false;
+        }
+        //Check if the rock is in path and it can reenter the kitchen
+        if (!rock.isInTheKitchen) {
+            if (rock.getPlayer().id == 1 && rock.counter + steps <= board.getPlayerKitchen(rock).length + (board.getPath().length - rock.getPosition())) {
+                System.out.println("rock is in path and it can reenter the kitchen");
+                result= true;
+            } else
+                System.out.println("the else if rock is in path and it can reenter the kitchen");
+             if(rock.counter + steps <= board.getPlayerKitchen(rock).length + (board.getPath().length - rock.getPosition() - 1)){
+                 result=false;
+             }
         }
 
         // If none of the above conditions are met, the rock cannot move
-        return false;
+        System.out.println("none of the above conditions are met, the rock cannot move");
+        result= true;
+        return result;
     }
 
     @Override

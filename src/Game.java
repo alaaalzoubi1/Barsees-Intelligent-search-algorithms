@@ -26,8 +26,6 @@ public class Game {
 
 //            State state = new State(board,currentPlayer,otherPlayer,true,rand);
 //            List<State> nextStates= state.getNextStates();
-
-
             if (currentPlayer.hasWon(currentPlayer.getPlayRocks())) {
                 scanner.close();
                 System.out.println("sahozy : " + currentPlayer.getName() + " has won the game!");
@@ -43,7 +41,8 @@ public class Game {
             } else {
                 System.out.println("sahozy : Invalid input!");
             }
-            turn = !turn;
+            System.out.println("dddddddddddddddd : " + currentPlayer.getPlayRocks()[0].counter);
+//            turn = !turn;
         }
 
         scanner.close();

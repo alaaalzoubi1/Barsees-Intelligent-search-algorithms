@@ -9,7 +9,6 @@ public class Board {
         this.player2Kitchen = new PlayRock[kitchenSize];
     }
 
-
     public PlayRock[] getPath() {
         return path;
     }
@@ -20,7 +19,6 @@ public class Board {
         } else {
             return player2Kitchen;
         }
-
 
     }
 
@@ -51,10 +49,8 @@ public class Board {
     public void removePieceFromPlayerKitchen(int position, PlayRock playRock) {
         if (playRock.getPlayer().id == 1) {
             player1Kitchen[position] = null;
-//            playRock.setPosition(-1);
         } else {
             player2Kitchen[position] = null;
-//            playRock.setPosition(-1);
         }
     }
 
@@ -136,7 +132,7 @@ public class Board {
 
         if (playRock.counter + totalSteps > path.length - 1 && playRock.getPlayer().id == 1) {
             playRock.tastee7 = true;
-            playRock.isInTheKitchen = true;
+//            playRock.isInTheKitchen = true;
             removePieceFromPath(playRock.getPosition());
             int steps = playRock.counter + totalSteps - (road.length - 1);
             playRock.setPosition(-1);
@@ -176,7 +172,7 @@ public class Board {
         }
 
 
-    }//Jesus christ
+    }
 
     public boolean isMatbokh(PlayRock playRock, int totalSteps) {
         if (playRock.getPosition() + totalSteps == getPlayerKitchen(playRock).length) {
