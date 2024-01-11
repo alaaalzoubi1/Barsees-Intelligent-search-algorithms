@@ -107,7 +107,7 @@ public class Game {
                 rockNumber = scanner.nextInt();
                 Move.Uncle(availableRocks[rockNumber - 1], board, choice);
             }
-
+            //patata
             System.out.println("sahozy : Choose a rock number to move:");
             for (int i = 0; i < availableRocks.length; i++) {
                 if (!availableRocks[i].finish && availableRocks[i].getPosition() != -1) {
