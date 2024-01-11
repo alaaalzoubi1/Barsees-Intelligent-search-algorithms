@@ -11,7 +11,7 @@ public class DiceRolls {
         }
     }
 
-    public String countOnesAndNameState() {
+    public String countOnesAndNameState() {//counting the downward facing shells
         int count = 0;
 
         for (int i = 0; i < 6; i++) {

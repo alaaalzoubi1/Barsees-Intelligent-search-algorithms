@@ -28,7 +28,7 @@ public class Player {
         return name;
     }
 
-    public PlayRock[] getPlayRocks() {
+    public PlayRock[]  getPlayRocks() {
         return playRocks;
     }
 

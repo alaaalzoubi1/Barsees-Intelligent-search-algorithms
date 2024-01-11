@@ -39,7 +39,7 @@ public class Game {
             if (input == 0) {
                 break;
             } else if (input == 1) {
-                handleDiceRollAndMove(currentPlayer, otherPlayer,rand);
+                handleDiceRollAndMove(currentPlayer, otherPlayer, rand);
             } else {
                 System.out.println("sahozy : Invalid input!");
             }
@@ -50,7 +50,7 @@ public class Game {
         System.out.println("sahozy : Game over. Thank you for playing!");
     }
 
-    private void handleDiceRollAndMove(Player currentPlayer, Player otherPlayer,DiceRolls rand) {
+    private void handleDiceRollAndMove(Player currentPlayer, Player otherPlayer, DiceRolls rand) {
         rand.printState();
         boolean notAllRocksOutBoard = false;
 
@@ -75,31 +75,57 @@ public class Game {
                 return;
             }
         }
-        System.out.println("You rolled a :" ); rand.printState();
+        System.out.println("You rolled a :");
+        rand.printState();
 
         PlayRock[] availableRocks = currentPlayer.getPlayRocks();
-        System.out.println("sahozy : Available rocks for " + currentPlayer.getName() + ":");
-        for (int i = 0; i < availableRocks.length; i++) {
-            if (!availableRocks[i].finish) {
-                System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i]);
-            }
-        }
 
-        System.out.println("sahozy : Choose a rock number to move:");
-        int rockNumber = scanner.nextInt();
-        if (rockNumber >= 1 && rockNumber <= availableRocks.length) {
-            String diceResult = rand.countOnesAndNameState();
-            if (diceResult.equals("Dest")||diceResult.equals("Bunja")) {
-                System.out.println("1. Add a new rock to the board\n2. Move an available rock 1 position");
-                Scanner scanner = new Scanner(System.in);
-                int choice = scanner.nextInt();
-                Move.DoMove(availableRocks[rockNumber - 1], board, diceResult);
+
+        int rockNumber;
+
+        String diceResult = rand.countOnesAndNameState();
+        if (diceResult.equals("Dest") || diceResult.equals("Bunja")) {
+            System.out.println("Sahozy : Add a new rock to the board\n2. Move an available rock 1 position");
+            Scanner scanner = new Scanner(System.in);
+            int choice = scanner.nextInt();
+            if (choice == 1) {
+                System.out.println("Sahozy : a new playRock will be added for : " + currentPlayer.getName());
+                for (int i = 0; i < availableRocks.length; i++) {
+                    if (availableRocks[i].getPosition() == -1) {
+                        Move.Uncle(availableRocks[i], board, choice);
+                        break;
+                    }
+                }
+            } else if (choice == 2) {
+                System.out.println("Sahzoy : choose playRock to move by 1");
+                for (int i = 0; i < availableRocks.length; i++) {
+                    if (availableRocks[i].getPosition() != -1) {
+                        System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i]);
+                    }
+                }
+
+                rockNumber = scanner.nextInt();
+                Move.Uncle(availableRocks[rockNumber - 1], board, choice);
             }
-            boolean x = Rules.kill(board, availableRocks[rockNumber - 1], otherPlayer.getPlayRocks());
-            board.printBoard();
+
+            System.out.println("sahozy : Choose a rock number to move:");
+            for (int i = 0; i < availableRocks.length; i++) {
+                if (!availableRocks[i].finish && availableRocks[i].getPosition() != -1) {
+                    System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i]);
+                }
+            }
+            rockNumber = scanner.nextInt();
+            Move.DoMove(availableRocks[rockNumber - 1], board, diceResult);
         } else {
-            System.out.println("Invalid rock number!");
+            for (int i = 0; i < availableRocks.length; i++) {
+                if (!availableRocks[i].finish && availableRocks[i].getPosition() != -1) {
+                    System.out.println("Rock " + (i + 1) + ": Position " + availableRocks[i]);
+                }
+            }
+            rockNumber = scanner.nextInt();
+            Move.DoMove(availableRocks[rockNumber - 1], board, diceResult);
         }
-
+        boolean x = Rules.kill(board, availableRocks[rockNumber - 1], otherPlayer.getPlayRocks());
+        board.printBoard();
     }
 }
