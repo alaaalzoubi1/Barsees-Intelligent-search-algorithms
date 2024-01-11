@@ -120,21 +120,23 @@ public List<State> getNextStates() {
     int steps = convertDiceResultToSteps(diceResult);
 
     for (PlayRock rock : currentPlayer.getPlayRocks()) {
-        if (canMoveRock(rock, steps)) {
+        if (true) {
             Board newBoard = new Board(board.getPath().length, board.getPlayerKitchen(currentPlayer.getPlayRocks()[1]).length);
             copyBoardState(this.board, newBoard);
             Player currentCopy = new Player(currentPlayer);
 
             // Create a copy of the PlayRock using the copy constructor
+            System.out.println(diceResult + "pooooooooooooo : " + currentCopy.getPlayRocks()[i]);
 
             Move.DoMove(currentCopy.getPlayRocks()[i], newBoard, diceResult);
+            System.out.println(diceResult + "pooooooooooooo : " + currentCopy.getPlayRocks()[i]);
 
             boolean nextPlayerTurn = !this.isPlayer1Turn;
             Player nextPlayer = nextPlayerTurn ? currentPlayer : otherPlayer;
 
             State successorState = new State(newBoard, currentCopy, otherPlayer, nextPlayerTurn, diceRolls);
             successors.add(successorState);
-            System.out.println(successorState);
+            successorState.getBoard().printBoard();
             i++;
         }
     }
@@ -205,7 +207,7 @@ public List<State> getNextStates() {
         }
         sb.append("Is Player 1's Turn: ").append(isPlayer1Turn).append("\n");
         sb.append("Dice Rolls: ").append(diceRolls.countOnesAndNameState()).append("\n");
-        sb.append("Board:\n").append(board.printBoard());
+//        sb.append("Board:\n").append(board.printBoard());
 
         return sb.toString();
     }

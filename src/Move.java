@@ -7,11 +7,7 @@ public class Move {
 
         switch (x) {
             case "Dest": {
-                System.out.println("You rolled a " + diceResult + "! Choose an option:");
-                System.out.println("1. Add a new rock to the board\n2. Move an available rock 1 position");
 
-                Scanner scanner = new Scanner(System.in);
-                int choice = scanner.nextInt();
                 Player player = playRock.getPlayer();
                 PlayRock[] availableRocks = player.getPlayRocks();
                 int rockNumber;
@@ -106,9 +102,10 @@ public class Move {
             break;
             case "Duwag":
                 if (playRock.isInTheKitchen) {
-
+                    System.out.println("fffffffffffffffff");
                     board.movePlayRockInKitchen(playRock, 2, board.getPlayerKitchen(playRock));
                 } else {
+                    System.out.println("gggggggggggggggggg");
                     board.movePlayRockInPath(playRock, 2, board.getPath());
                 }
                 break;

@@ -11,7 +11,7 @@ public class PlayRock {
     public PlayRock(Player player, Board board) {
         this.player = player;
         this.board = board;
-        this.position = 0;
+        this.position = -1;
         this.tastee7 = false;
         this.counter = -1;
     }

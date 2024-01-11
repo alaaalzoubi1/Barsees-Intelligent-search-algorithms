@@ -23,8 +23,9 @@ public class Game {
 
             Player currentPlayer = turn ? player1 : player2;
             Player otherPlayer = turn ? player2 : player1;
-            State state = new State(board,currentPlayer,otherPlayer,true,rand);
-            List<State> nextStates= state.getNextStates();
+
+//            State state = new State(board,currentPlayer,otherPlayer,true,rand);
+//            List<State> nextStates= state.getNextStates();
 
 
             if (currentPlayer.hasWon(currentPlayer.getPlayRocks())) {
@@ -74,6 +75,8 @@ public class Game {
                 return;
             }
         }
+        System.out.println("You rolled a :" ); rand.printState();
+
         PlayRock[] availableRocks = currentPlayer.getPlayRocks();
         System.out.println("sahozy : Available rocks for " + currentPlayer.getName() + ":");
         for (int i = 0; i < availableRocks.length; i++) {
@@ -86,7 +89,12 @@ public class Game {
         int rockNumber = scanner.nextInt();
         if (rockNumber >= 1 && rockNumber <= availableRocks.length) {
             String diceResult = rand.countOnesAndNameState();
-            Move.DoMove(availableRocks[rockNumber - 1], board, diceResult);
+            if (diceResult.equals("Dest")||diceResult.equals("Bunja")) {
+                System.out.println("1. Add a new rock to the board\n2. Move an available rock 1 position");
+                Scanner scanner = new Scanner(System.in);
+                int choice = scanner.nextInt();
+                Move.DoMove(availableRocks[rockNumber - 1], board, diceResult);
+            }
             boolean x = Rules.kill(board, availableRocks[rockNumber - 1], otherPlayer.getPlayRocks());
             board.printBoard();
         } else {

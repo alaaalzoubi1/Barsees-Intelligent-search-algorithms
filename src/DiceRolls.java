@@ -46,6 +46,6 @@ public class DiceRolls {
 
     public void printState() {
         String state = countOnesAndNameState();
-        System.out.println("Current state: " + state);
+        System.out.println(state);
     }
 }
