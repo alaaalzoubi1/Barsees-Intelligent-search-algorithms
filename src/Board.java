@@ -176,7 +176,7 @@ public class Board {
         }
 
 
-    }//Jesus
+    }//Jesus christ
 
     public boolean isMatbokh(PlayRock playRock, int totalSteps) {
         if (playRock.getPosition() + totalSteps == getPlayerKitchen(playRock).length) {
